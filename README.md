@@ -78,8 +78,8 @@ Use this method if you want to build the tool from the source code.
 
 #### This command:
 ```bash
-./bin/release_changelog --version "2.2.0"
+./bin/release_changelog --version "2.1.20-Beta1"
 ```
 
 #### Will create this file:
-[changelog-2.2.0.md](https://github.com/euliaP/release_changelog_generator/blob/main/changelog-2.1.20-Beta1.md)
+[changelog-2.1.20-Beta1.md](https://github.com/euliaP/release_changelog_generator/blob/main/changelog-2.1.20-Beta1.md)
