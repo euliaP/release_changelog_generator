@@ -21,7 +21,7 @@ This is the recommended way to run the tool without needing to build it yourself
 
 ### Linux / macOS Steps
 
-1.  #TODO change link!!! Go to the [**Releases**](https://github.com/YOUR_USERNAME/YOUR_REPO/releases) page of this repository.
+1.  Go to the [**Releases**](https://github.com/euliaP/release_changelog_generator/releases) page of this repository.
 2.  Download the latest `release_changelog.zip` file.
 3.  Open your terminal, unzip the folder, and `cd` into it:
     ```bash
@@ -49,10 +49,10 @@ Use this method if you want to build the tool from the source code.
 
 ### Steps
 
-1.  #TODO change link!!! Clone this repository:
+1.  Clone this repository:
     ```bash
-    git clone [https://github.com/YOUR_USERNAME/YOUR_REPO.git](https://github.com/YOUR_USERNAME/YOUR_REPO.git)
-    cd YOUR_REPO
+    git clone https://github.com/euliaP/release_changelog_generator.git
+    cd release_changelog_generator
     ```
 2.  Run the Gradle `installDist` task. This will build the script and place it in the `build/install/` directory.
     ```bash
@@ -76,9 +76,10 @@ Use this method if you want to build the tool from the source code.
 
 ### Example
 
+#### This command:
 ```bash
-# This command:
 ./bin/release_changelog --version "2.2.0"
+```
 
-# Will create this file:
+#### Will create this file:
 changelog-2.2.0.md
