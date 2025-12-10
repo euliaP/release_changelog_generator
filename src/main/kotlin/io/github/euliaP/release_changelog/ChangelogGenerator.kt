@@ -68,7 +68,7 @@ fun Issue.findSubsystem(): String {
 class ChangelogCommand : CliktCommand(name = "changelog-generator") {
     private val releaseVersion by option(
         "-v", "--version",
-        help = "The Kotlin Project release version (e.g., \\\"2.1.20-Beta1\\\")."
+        help = "The Kotlin Project release version (e.g., \"2.1.20-Beta1\")."
     ).required()
     override fun run() {
         /*
