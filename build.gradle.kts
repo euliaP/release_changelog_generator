@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.euliaP.release_changelog"
-version = "1.0"
+version = "2.0"
 
 repositories {
     mavenCentral()
