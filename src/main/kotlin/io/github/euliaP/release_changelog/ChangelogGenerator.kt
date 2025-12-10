@@ -1,8 +1,9 @@
 package io.github.euliaP.release_changelog
 
-import kotlinx.cli.ArgParser
-import kotlinx.cli.ArgType
-import kotlinx.cli.required
+import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.main
+import com.github.ajalt.clikt.parameters.options.option
+import com.github.ajalt.clikt.parameters.options.required
 
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
@@ -64,37 +65,34 @@ fun Issue.findSubsystem(): String {
     } ?: "Uncategorized" // 'subsystemField' or 'value' was null
 }
 
+class ChangelogCommand : CliktCommand(name = "changelog-generator") {
+    private val releaseVersion by option(
+        "-v", "--version",
+        help = "The Kotlin Project release version (e.g., \\\"2.1.20-Beta1\\\")."
+    ).required()
+    override fun run() {
+        /*
+        Validating release version input based on Semantic Versioning:
+        MAJOR.MINOR.PATCH-MODIFIER
+        */
+        val versionRegex = Regex("^\\d+\\.\\d+\\.\\d+(-[A-Za-z0-9-]+)?$")
+        if (!versionRegex.matches(releaseVersion)) {
+            echo("Error: '$releaseVersion' is not a valid version format.", err = true)
+            echo(
+                "Expected format: MAJOR.MINOR.PATCH (e.g., 2.1.20) or MAJOR.MINOR.PATCH-MODIFIER (e.g., 2.1.20-Beta1)",
+                err = true
+            )
+            exitProcess(1)
+        }
+        echo("Input format appears valid. Fetching the data...")
+        runBlocking {
+            buildChangeLog(releaseVersion)
+        }
+    }
+}
 
 fun main(args: Array<String>) {
-
-    // CLI argument parsing
-    val parser = ArgParser("changelog-generator")
-    var releaseVersion by parser.option(
-        type = ArgType.String,
-        shortName = "v",
-        fullName = "version",
-        description = "The Kotlin Project release version (e.g., 2.2.0, 2.3.0-Beta1)."
-    ).required()
-
-    try {
-        parser.parse(args)
-    } catch (e: Exception) {
-        println("\nError: ${e.message}")
-        exitProcess(1)
-    }
-
-    /*
-    Validating release version input based on Semantic Versioning:
-    MAJOR.MINOR.PATCH-MODIFIER
-    */
-    val versionRegex = Regex("^\\d+\\.\\d+\\.\\d+(-[A-Za-z0-9-]+)?$")
-    if (!versionRegex.matches(releaseVersion)) {
-        println("Error: '$releaseVersion' is not a valid version format.")
-        println("Expected format: MAJOR.MINOR.PATCH (e.g., 2.1.20) or MAJOR.MINOR.PATCH-MODIFIER (e.g., 2.1.20-Beta1)")
-        exitProcess(1)
-    }
-    println("Input format appears valid. Fetching the data...")
-    buildChangeLog(releaseVersion)
+    ChangelogCommand().main(args)
 }
 
 fun buildChangeLog(releaseVersion: String) = runBlocking {
@@ -115,7 +113,7 @@ fun buildChangeLog(releaseVersion: String) = runBlocking {
     try {
         while (keepFetching) {
             println("Fetching page (skip $skip)...")
-    // #TODO: possible improvement. add retry logic for temp server-side errors
+            // #TODO: possible improvement. add retry logic for temp server-side errors
             val response: HttpResponse = client.get("https://youtrack.jetbrains.com/api/issues") {
                 url {
                     parameters.append("query", query)
