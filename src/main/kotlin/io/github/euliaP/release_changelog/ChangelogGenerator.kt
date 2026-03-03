@@ -15,14 +15,12 @@ import java.io.File
 import kotlin.system.exitProcess
 
 // A builder that holds custom JSON-parsing rules
-
 val jsonParser = Json {
     ignoreUnknownKeys = true
     coerceInputValues = true
 }
 
 // Data schemas that are used for response mapping
-
 @Serializable
 data class CustomFieldValue(
     val name: String
@@ -103,7 +101,7 @@ fun buildChangeLog(releaseVersion: String) = runBlocking {
 
     val client = HttpClient(CIO)    // Connection pool manager; because we intend to send more than one request
 
-    val query = "project: KT AND State: Fixed AND \"Available in\": \"$releaseVersion\""
+    val query = "project: KT AND State: Fixed AND \"Available in\": $releaseVersion"
     val fields = "idReadable,summary,customFields(name,value(name))"
 
     val allIssues = mutableListOf<Issue>()
