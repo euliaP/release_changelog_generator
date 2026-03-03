@@ -23,10 +23,10 @@ This is the recommended way to run the tool without needing to build it yourself
 
 1.  Go to the [**Releases**](https://github.com/euliaP/release_changelog_generator/releases) page of this repository.
 2.  Download the latest `release_changelog.zip` file.
-3.  Open your terminal, unzip the folder, and `cd` into it:
+3.  Open your terminal, unzip the folder, and `cd` into it. Example:
     ```bash
-    unzip release_changelog.zip
-    cd release_changelog
+    unzip release_changelog-1.0.zip
+    cd release_changelog-1.0
     ```
 4.  Make the launcher script executable (you only need to do this once):
     ```bash
@@ -82,4 +82,4 @@ Use this method if you want to build the tool from the source code.
 ```
 
 #### Will create this file:
-changelog-2.2.0.md
+[changelog-2.2.0.md](https://github.com/euliaP/release_changelog_generator/blob/main/changelog-2.1.20-Beta1.md)
